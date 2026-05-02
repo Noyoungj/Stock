@@ -24,7 +24,9 @@
       "Bash(git rm *)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(.venv\\\\Scripts\\\\python.exe --version)"
+      "Bash(.venv\\\\Scripts\\\\python.exe --version)",
+      "Bash(git config *)",
+      "Bash(git commit *)"
     ]
   }
 }
