@@ -1,0 +1,7 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+reports/
+naver_cookies.json
+*.db

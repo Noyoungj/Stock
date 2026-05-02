@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/super/.claude/projects/C--Users-super-Desktop-Stock/memory//**)",
+      "Read(//c/Users/super/.claude/projects/C--Users-super-Desktop-Stock/memory/**)",
+      "WebSearch",
+      "WebFetch(domain:www.tistory.com)",
+      "WebFetch(domain:tistory.github.io)",
+      "WebFetch(domain:bytenucleus.net)",
+      "Bash(n8n --version)",
+      "Bash(npx n8n *)",
+      "Bash(where python *)",
+      "Bash(where python3 *)",
+      "Bash(where bash *)",
+      "Bash(bash --version)",
+      "Bash(\"/c/Users/super/Desktop/Stock/.venv/bin/python\" --version)",
+      "Bash(/c/Users/super/AppData/Local/Programs/Python/Python312/python.exe --version)",
+      "Read(//c/Users/super/AppData/Local/Programs/**)",
+      "Bash(/c/Program Files/Git/usr/bin/bash.exe *)",
+      "Bash(python *)",
+      "Bash(pip install *)",
+      "Bash(pip --version)",
+      "Bash(py *)",
+      "Bash(git rm *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(.venv\\\\Scripts\\\\python.exe --version)"
+    ]
+  }
+}

@@ -13,6 +13,7 @@ from dart_client import get_disclosures
 from news_client import get_news
 from financial_client import get_financial_data, summarize_financials
 from watchlist import load as wl_load, cmd_add, cmd_remove, cmd_list
+from chart_generator import generate_charts
 
 console = Console()
 
@@ -22,13 +23,90 @@ def get_price_data(code, days=30):
     df = fdr.DataReader(code, start, end)
     return df
 
+
+def get_market_index():
+    """코스피·코스닥 당일 지수 반환"""
+    end = datetime.today().strftime("%Y-%m-%d")
+    start = (datetime.today() - timedelta(days=5)).strftime("%Y-%m-%d")
+    result = {}
+    for label, ticker in [("코스피", "KS11"), ("코스닥", "KQ11")]:
+        try:
+            df = fdr.DataReader(ticker, start, end)
+            if not df.empty:
+                latest = df.iloc[-1]
+                result[label] = {
+                    "close": float(latest["Close"]),
+                    "change": float(latest["Change"]),
+                }
+        except Exception:
+            pass
+    return result
+
+def make_tomorrow_checkpoints(price, volume, df, high_52w, low_52w, news_list, disclosures):
+    """데이터 근거가 있는 항목만 체크포인트로 반환"""
+    points = []
+
+    # 거래량: 오늘 vs 5일 평균
+    avg_vol = df["Volume"].tail(5).mean()
+    if avg_vol > 0:
+        ratio = volume / avg_vol
+        if ratio >= 1.5:
+            points.append(f"오늘 거래량이 5일 평균 대비 {ratio:.1f}배 — 관심 급증, 내일 변동성 확인 필요")
+        elif ratio <= 0.5:
+            points.append(f"오늘 거래량이 5일 평균 대비 {ratio:.1f}배 — 관망세, 방향성 나올 때까지 지켜볼 필요")
+
+    # 이동평균 추세
+    if len(df) >= 20:
+        ma5  = df["Close"].tail(5).mean()
+        ma20 = df["Close"].tail(20).mean()
+        if ma5 > ma20:
+            points.append("5일 이평선이 20일 이평선 위 — 단기 상승 흐름 유지 중, 내일도 추세 지속 여부 확인")
+        else:
+            points.append("5일 이평선이 20일 이평선 아래 — 단기 하락 흐름, 반등 신호 나오는지 확인")
+
+    # 52주 고저 근접 여부 (5% 이내)
+    if high_52w > 0 and price >= high_52w * 0.95:
+        points.append(f"현재가가 52주 최고가({high_52w:,}원)에 근접 — 저항 구간, 돌파 여부 주목")
+    if low_52w > 0 and price <= low_52w * 1.05:
+        points.append(f"현재가가 52주 최저가({low_52w:,}원)에 근접 — 지지 구간, 추가 하락 여부 확인")
+
+    # 뉴스/공시 있으면
+    if news_list:
+        points.append("오늘 관련 뉴스 있음 — 내일 장 초반 시장 반응 확인 필요")
+    if disclosures:
+        points.append("오늘 공시 있음 — 공시 내용에 대한 시장 반응 내일 확인")
+
+    return points
+
+
 def save_md(code, name, today_str, price, change, volume, high_30, low_30,
-            df, fin, summary, news_list, disclosures):
+            high_52w, low_52w, market_index, df, fin, summary, news_list, disclosures):
     lines = []
     arrow = "▲" if change >= 0 else "▼"
     change_str = f"+{change*100:.2f}%" if change >= 0 else f"{change*100:.2f}%"
 
     lines.append(f"# 📊 {name} ({code}) | {today_str}\n")
+
+    lines.append("> 📌 이 글은 AI가 데이터를 분석해서 정리한 내용이에요. 주식 정보가 어디 있는지도 모르겠고, 찾아도 무슨 말인지 모르겠다는 분들을 위해 쓰고 있어요. 틀릴 수도 있으니 꼭 참고용으로만 봐주세요 😊\n")
+
+    # ── 내일 체크포인트 (데이터 근거 있는 것만)
+    checkpoints = make_tomorrow_checkpoints(price, volume, df, high_52w, low_52w, news_list, disclosures)
+    if checkpoints:
+        lines.append("## 내일 체크포인트")
+        lines.append("> 데이터 기반 확인 포인트입니다. 예측이 아닙니다.")
+        for pt in checkpoints:
+            lines.append(f"- {pt}")
+        lines.append("")
+
+    # ── 시장 지수
+    if market_index:
+        idx_parts = []
+        for label, v in market_index.items():
+            c = v["change"]
+            a = "▲" if c >= 0 else "▼"
+            idx_parts.append(f"{label} {v['close']:,.2f} {a}{abs(c*100):.2f}%")
+        lines.append("## 오늘 시장")
+        lines.append("  |  ".join(idx_parts) + "\n")
 
     lines.append("## 현재가")
     lines.append(f"**{price:,}원** {arrow} {change_str}  (거래량 {volume:,}주)\n")
@@ -36,6 +114,8 @@ def save_md(code, name, today_str, price, change, volume, high_30, low_30,
     lines.append("## 시세 요약")
     lines.append(f"| 구분 | 값 |")
     lines.append(f"|------|-----|")
+    lines.append(f"| 52주 최고가 | {high_52w:,}원 |")
+    lines.append(f"| 52주 최저가 | {low_52w:,}원 |")
     lines.append(f"| 30일 최고가 | {high_30:,}원 |")
     lines.append(f"| 30일 최저가 | {low_30:,}원 |")
     lines.append(f"| 5일 평균 거래량 | {int(df['Volume'].tail(5).mean()):,}주 |")
@@ -113,17 +193,21 @@ def save_md(code, name, today_str, price, change, volume, high_30, low_30,
 
 
 def print_report(code, name):
-    df = get_price_data(code)
+    # 365일 데이터로 52주 고저 + 30일 통계 모두 커버
+    df = get_price_data(code, days=365)
     if df.empty:
         console.print(f"[red]{name} ({code}) — 데이터 없음[/red]")
         return
 
-    latest  = df.iloc[-1]
-    price   = int(latest["Close"])
-    change  = latest["Change"]
-    volume  = int(latest["Volume"])
-    high_30 = int(df["High"].max())
-    low_30  = int(df["Low"].min())
+    latest   = df.iloc[-1]
+    price    = int(latest["Close"])
+    change   = latest["Change"]
+    volume   = int(latest["Volume"])
+    high_52w = int(df["High"].max())
+    low_52w  = int(df["Low"].min())
+    df30     = df.tail(30)
+    high_30  = int(df30["High"].max())
+    low_30   = int(df30["Low"].min())
 
     change_str   = f"+{change*100:.2f}%" if change >= 0 else f"{change*100:.2f}%"
     change_color = "green" if change >= 0 else "red"
@@ -135,11 +219,24 @@ def print_report(code, name):
         ma20 = df["Close"].tail(20).mean()
         trend = "  단기 [green]상승세[/green]" if ma5 > ma20 else "  단기 [red]하락세[/red]"
 
-    # ── 헤더 + 현재가 한 줄
+    # ── 시장 지수
+    market_index = get_market_index()
+    if market_index:
+        parts = []
+        for label, v in market_index.items():
+            a = "▲" if v["change"] >= 0 else "▼"
+            c = "green" if v["change"] >= 0 else "red"
+            parts.append(f"[dim]{label}[/dim] {v['close']:,.2f} [{c}]{a}{abs(v['change']*100):.2f}%[/{c}]")
+        console.print("  " + "   ".join(parts))
+
+    # ── 헤더 + 현재가
     console.print(
         f"\n[bold cyan]📊 {name}[/bold cyan] [dim]({code})[/dim]  "
         f"[bold]{price:,}원[/bold]  [{change_color}]{arrow} {change_str}[/{change_color}]"
-        f"  [dim]거래량 {volume:,}  |  고 {high_30:,} / 저 {low_30:,}[/dim]{trend}"
+        f"  [dim]거래량 {volume:,}[/dim]{trend}"
+    )
+    console.print(
+        f"  [dim]52주  고 {high_52w:,} / 저 {low_52w:,}   30일  고 {high_30:,} / 저 {low_30:,}[/dim]"
     )
 
     # ── 재무 핵심 한 줄
@@ -178,8 +275,13 @@ def print_report(code, name):
     # ── MD 저장
     today_str = datetime.today().strftime("%Y-%m-%d")
     path = save_md(code, name, today_str, price, change, volume, high_30, low_30,
-                   df, fin, summary, news_list, disclosures)
+                   high_52w, low_52w, market_index, df30, fin, summary, news_list, disclosures)
     console.print(f"  [dim]💾 {path}[/dim]")
+
+    # ── 차트 생성 (주가 차트는 365일, 거래량은 30일)
+    chart_paths = generate_charts(code, name, df, fin)
+    console.print(f"  [dim]📊 차트 {len(chart_paths)}개 생성[/dim]")
+    return chart_paths
 
 def main():
     args = sys.argv[1:]

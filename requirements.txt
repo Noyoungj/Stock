@@ -1,0 +1,10 @@
+python-dotenv
+anthropic
+FinanceDataReader
+selenium
+beautifulsoup4
+lxml
+rich
+requests
+pandas
+matplotlib
