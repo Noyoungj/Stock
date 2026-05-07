@@ -23,16 +23,16 @@ Python으로 한국 주식 데이터 수집 + MD 리포트 생성까지 완성�
 
 ---
 
-## 목표 플로우 (n8n)
+## 목표 플로우
 
 ```
 n8n Cron (매일 특정 시간)
     ↓
 Execute Command → python3 report.py 실행
     ↓
-Claude API → MD 내용 분석 + 블로그 글 작성
+Claude API → MD 내용 분석 + 리포트 생성
     ↓
-티스토리 API → 자동 업로드
+네이버 블로그 API → 자동 업로드
 ```
 
 ---
@@ -66,7 +66,7 @@ npx n8n  # http://localhost:5678
 |-----|------|
 | DART API 키 | ✅ 보유 |
 | Claude API 키 | ✅ 보유 |
-| 티스토리 API 키 | ❌ 발급 필요 (tistory.com/guide/api) |
+| 네이버 블로그 API 키 | ❌ 발급 필요 |
 
 ---
 

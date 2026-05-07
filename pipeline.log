@@ -471,3 +471,270 @@
 2026-05-02 16:06:33,231 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.02
 2026-05-02 16:06:33,233 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260502_SK이터닉스_475150.md
 2026-05-02 16:06:33,233 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-02 21:47:02,371 [INFO] ========================================
+2026-05-02 21:47:02,372 [INFO] 파이프라인 시작
+2026-05-02 21:47:02,386 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-02 21:47:02,386 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-02 21:47:32,611 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 21:48:05,960 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 21:48:05,991 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.02
+2026-05-02 21:48:05,992 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260502_SK이터닉스_475150.md
+2026-05-02 21:48:05,992 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-02 21:48:46,761 [INFO] [삼성전자] STEP 1 - 리포트 생성
+2026-05-02 21:48:51,312 [INFO] [삼성전자] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 21:49:24,565 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 21:49:24,567 [INFO] [삼성전자] 변환 완료: [삼성전자] 오늘 장 마감 정리 | 2026.05.02
+2026-05-02 21:49:24,569 [INFO] [삼성전자] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260502_삼성전자_005930.md
+2026-05-02 21:49:24,569 [INFO] [삼성전자] STEP 3 - 네이버 업로드
+2026-05-02 21:51:20,794 [INFO] [SK하이닉스] STEP 1 - 리포트 생성
+2026-05-02 21:55:04,761 [INFO] ========================================
+2026-05-02 21:55:04,762 [INFO] 파이프라인 시작
+2026-05-02 21:55:04,763 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-02 21:55:04,763 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-02 21:55:12,217 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 21:55:38,533 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 21:55:38,589 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.02
+2026-05-02 21:55:38,590 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260502_SK이터닉스_475150.md
+2026-05-02 21:55:38,591 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-02 22:01:04,484 [INFO] ========================================
+2026-05-02 22:01:04,484 [INFO] 파이프라인 시작
+2026-05-02 22:01:04,485 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-02 22:01:04,485 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-02 22:01:11,730 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 22:01:42,578 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 22:01:42,606 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.02
+2026-05-02 22:01:42,607 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260502_SK이터닉스_475150.md
+2026-05-02 22:01:42,607 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-02 22:03:51,760 [INFO] [삼성전자] STEP 1 - 리포트 생성
+2026-05-02 22:06:31,964 [INFO] ========================================
+2026-05-02 22:06:31,964 [INFO] 파이프라인 시작
+2026-05-02 22:06:31,966 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-02 22:06:31,967 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-02 22:06:42,081 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 22:07:11,861 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 22:07:11,902 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.02
+2026-05-02 22:07:11,904 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260502_SK이터닉스_475150.md
+2026-05-02 22:07:11,904 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-02 22:09:28,251 [INFO] [삼성전자] STEP 1 - 리포트 생성
+2026-05-02 22:14:10,271 [INFO] ========================================
+2026-05-02 22:14:10,271 [INFO] 파이프라인 시작
+2026-05-02 22:14:10,272 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-02 22:14:10,272 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-02 22:14:15,951 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 22:14:15,954 [ERROR] [SK이터닉스] 블로그 글 변환 실패: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-05-02 22:14:15,954 [INFO] [삼성전자] STEP 1 - 리포트 생성
+2026-05-02 22:14:19,506 [INFO] [삼성전자] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 22:14:19,508 [ERROR] [삼성전자] 블로그 글 변환 실패: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-05-02 22:14:19,508 [INFO] [SK하이닉스] STEP 1 - 리포트 생성
+2026-05-02 22:14:22,854 [INFO] [SK하이닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 22:14:22,863 [ERROR] [SK하이닉스] 블로그 글 변환 실패: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-05-02 22:14:22,863 [INFO] [현대자동차] STEP 1 - 리포트 생성
+2026-05-02 22:14:26,322 [INFO] [현대자동차] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 22:14:26,331 [ERROR] [현대자동차] 블로그 글 변환 실패: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-05-02 22:14:26,331 [INFO] [현대로템] STEP 1 - 리포트 생성
+2026-05-02 22:14:29,740 [INFO] [현대로템] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 22:14:29,750 [ERROR] [현대로템] 블로그 글 변환 실패: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-05-02 22:14:29,750 [INFO] ========================================
+2026-05-02 22:14:29,751 [INFO] 완료 (19초) - 처리 5종목 | 업로드 0건 | 스킵 0건
+2026-05-02 22:14:29,751 [ERROR]   실패: SK이터닉스 @ blog_write - Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-05-02 22:14:29,751 [ERROR]   실패: 삼성전자 @ blog_write - Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-05-02 22:14:29,751 [ERROR]   실패: SK하이닉스 @ blog_write - Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-05-02 22:14:29,751 [ERROR]   실패: 현대자동차 @ blog_write - Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-05-02 22:14:29,752 [ERROR]   실패: 현대로템 @ blog_write - Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-05-02 22:16:15,043 [INFO] ========================================
+2026-05-02 22:16:15,044 [INFO] 파이프라인 시작
+2026-05-02 22:16:15,044 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-02 22:16:15,045 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-02 22:16:20,661 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-02 22:16:21,985 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-02 22:17:03,482 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.02
+2026-05-02 22:17:03,483 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260502_SK이터닉스_475150.md
+2026-05-02 22:17:03,484 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-03 00:59:46,076 [INFO] ========================================
+2026-05-03 00:59:46,078 [INFO] 파이프라인 시작
+2026-05-03 00:59:46,079 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-03 00:59:46,079 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-03 00:59:51,986 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-03 00:59:53,361 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-03 01:00:34,273 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.03
+2026-05-03 01:00:34,277 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260503_SK이터닉스_475150.md
+2026-05-03 01:00:34,277 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-03 01:01:11,683 [INFO] [삼성전자] STEP 1 - 리포트 생성
+2026-05-03 01:02:26,151 [INFO] ========================================
+2026-05-03 01:02:26,151 [INFO] 파이프라인 시작
+2026-05-03 01:02:26,152 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-03 01:02:26,153 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-03 01:02:32,010 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-03 01:02:33,535 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-03 01:03:15,424 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.03
+2026-05-03 01:03:15,425 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260503_SK이터닉스_475150.md
+2026-05-03 01:03:15,426 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-03 01:04:14,839 [WARNING] Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPConnection(host='localhost', port=61194): Failed to establish a new connection: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다")': /session/f5c8082db1986bec4a0cadc84d96fa40
+2026-05-03 01:05:00,956 [INFO] ========================================
+2026-05-03 01:05:00,957 [INFO] 파이프라인 시작
+2026-05-03 01:05:00,957 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-03 01:05:00,957 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-03 01:05:06,718 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-03 01:05:08,161 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-03 01:05:51,503 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.03
+2026-05-03 01:05:51,504 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260503_SK이터닉스_475150.md
+2026-05-03 01:05:51,504 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-03 13:26:51,751 [INFO] ========================================
+2026-05-03 13:26:51,751 [INFO] 파이프라인 시작
+2026-05-03 13:26:51,761 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-03 13:26:51,761 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-03 13:26:57,620 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-03 13:26:59,101 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-03 13:27:39,247 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.03
+2026-05-03 13:27:39,249 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260503_SK이터닉스_475150.md
+2026-05-03 13:27:39,249 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-03 13:30:36,815 [INFO] [삼성전자] STEP 1 - 리포트 생성
+2026-05-03 13:30:40,088 [INFO] [삼성전자] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-03 13:30:41,145 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-03 13:31:33,362 [INFO] [삼성전자] 변환 완료: [삼성전자] 오늘 장 마감 정리 | 2026.05.03
+2026-05-03 13:31:33,364 [INFO] [삼성전자] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260503_삼성전자_005930.md
+2026-05-03 13:31:33,364 [INFO] [삼성전자] STEP 3 - 네이버 업로드
+2026-05-03 13:35:15,467 [INFO] [SK하이닉스] STEP 1 - 리포트 생성
+2026-05-03 13:35:18,701 [INFO] [SK하이닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-03 13:35:19,597 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-03 13:36:21,092 [INFO] [SK하이닉스] 변환 완료: [SK하이닉스] 오늘 장 마감 정리 | 2026.05.03
+2026-05-03 13:36:21,094 [INFO] [SK하이닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260503_SK하이닉스_000660.md
+2026-05-03 13:36:21,094 [INFO] [SK하이닉스] STEP 3 - 네이버 업로드
+2026-05-03 13:39:47,362 [INFO] [현대자동차] STEP 1 - 리포트 생성
+2026-05-03 13:39:50,651 [INFO] [현대자동차] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-03 13:39:52,006 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-03 13:40:38,524 [INFO] [현대자동차] 변환 완료: [현대자동차] 오늘 장 마감 정리 | 2026.05.03
+2026-05-03 13:40:38,526 [INFO] [현대자동차] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260503_현대자동차_005380.md
+2026-05-03 13:40:38,526 [INFO] [현대자동차] STEP 3 - 네이버 업로드
+2026-05-03 13:43:55,585 [INFO] [현대로템] STEP 1 - 리포트 생성
+2026-05-03 13:43:58,817 [INFO] [현대로템] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-03 13:44:00,031 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-03 13:44:52,879 [INFO] [현대로템] 변환 완료: [현대로템] 오늘 장 마감 정리 | 2026.05.03
+2026-05-03 13:44:52,883 [INFO] [현대로템] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260503_현대로템_064350.md
+2026-05-03 13:44:52,884 [INFO] [현대로템] STEP 3 - 네이버 업로드
+2026-05-03 13:48:26,273 [INFO] ========================================
+2026-05-03 13:48:26,273 [INFO] 완료 (1294초) - 처리 5종목 | 업로드 5건 | 스킵 0건
+2026-05-04 18:19:25,137 [INFO] ========================================
+2026-05-04 18:19:25,138 [INFO] 파이프라인 시작
+2026-05-04 18:19:25,155 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템']
+2026-05-04 18:19:25,155 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-04 18:19:31,022 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-04 18:19:32,700 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-04 18:20:13,054 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.04
+2026-05-04 18:20:13,059 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260504_SK이터닉스_475150.md
+2026-05-04 18:20:13,060 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-04 18:23:35,043 [INFO] [삼성전자] STEP 1 - 리포트 생성
+2026-05-04 18:23:38,553 [INFO] [삼성전자] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-04 18:23:39,707 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-04 18:24:35,832 [INFO] [삼성전자] 변환 완료: [삼성전자] 오늘 장 마감 정리 | 2026.05.04
+2026-05-04 18:24:35,839 [INFO] [삼성전자] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260504_삼성전자_005930.md
+2026-05-04 18:24:35,839 [INFO] [삼성전자] STEP 3 - 네이버 업로드
+2026-05-04 18:29:44,069 [INFO] [SK하이닉스] STEP 1 - 리포트 생성
+2026-05-04 18:29:47,446 [INFO] [SK하이닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-04 18:29:48,791 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-04 18:30:39,983 [INFO] [SK하이닉스] 변환 완료: [SK하이닉스] 오늘 장 마감 정리 | 2026.05.04
+2026-05-04 18:30:39,987 [INFO] [SK하이닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260504_SK하이닉스_000660.md
+2026-05-04 18:30:39,987 [INFO] [SK하이닉스] STEP 3 - 네이버 업로드
+2026-05-04 18:34:29,699 [INFO] [현대자동차] STEP 1 - 리포트 생성
+2026-05-04 18:34:33,200 [INFO] [현대자동차] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-04 18:34:34,351 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-04 18:35:26,988 [INFO] [현대자동차] 변환 완료: [현대자동차] 오늘 장 마감 정리 | 2026.05.04
+2026-05-04 18:35:26,993 [INFO] [현대자동차] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260504_현대자동차_005380.md
+2026-05-04 18:35:26,994 [INFO] [현대자동차] STEP 3 - 네이버 업로드
+2026-05-04 18:38:52,185 [INFO] [현대로템] STEP 1 - 리포트 생성
+2026-05-04 18:38:55,534 [INFO] [현대로템] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-04 18:38:56,535 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-04 18:40:01,891 [INFO] [현대로템] 변환 완료: [현대로템] 오늘 장 마감 정리 | 2026.05.04
+2026-05-04 18:40:01,896 [INFO] [현대로템] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260504_현대로템_064350.md
+2026-05-04 18:40:01,897 [INFO] [현대로템] STEP 3 - 네이버 업로드
+2026-05-04 18:44:08,614 [INFO] ========================================
+2026-05-04 18:44:08,615 [INFO] 완료 (1483초) - 처리 5종목 | 업로드 5건 | 스킵 0건
+2026-05-04 21:36:05,612 [INFO] ========================================
+2026-05-04 21:36:05,612 [INFO] 파이프라인 시작
+2026-05-04 21:36:05,612 [INFO] 대상 종목: ['쏘카']
+2026-05-04 21:36:05,613 [INFO] [쏘카] STEP 1 - 리포트 생성
+2026-05-04 21:36:11,416 [INFO] [쏘카] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-04 21:36:13,100 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-04 21:37:18,854 [INFO] [쏘카] 변환 완료: [쏘카] 오늘 장 마감 정리 | 2026.05.04
+2026-05-04 21:37:18,857 [INFO] [쏘카] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260504_쏘카_403550.md
+2026-05-04 21:37:18,858 [INFO] [쏘카] STEP 3 - 네이버 업로드
+2026-05-04 21:41:24,449 [INFO] ========================================
+2026-05-04 21:41:24,449 [INFO] 완료 (318초) - 처리 1종목 | 업로드 0건 | 스킵 1건
+2026-05-04 21:41:32,511 [INFO] ========================================
+2026-05-04 21:41:32,512 [INFO] 파이프라인 시작
+2026-05-04 21:41:32,512 [INFO] 대상 종목: ['쏘카']
+2026-05-04 21:41:32,513 [INFO] [쏘카] STEP 1 - 리포트 생성
+2026-05-04 21:41:38,063 [INFO] [쏘카] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-04 21:41:39,239 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-04 21:42:42,022 [INFO] [쏘카] 변환 완료: [쏘카] 오늘 장 마감 정리 | 2026.05.04
+2026-05-04 21:42:42,025 [INFO] [쏘카] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260504_쏘카_403550.md
+2026-05-04 21:42:42,026 [INFO] [쏘카] STEP 3 - 네이버 업로드
+2026-05-04 21:47:10,990 [INFO] ========================================
+2026-05-04 21:47:10,991 [INFO] 완료 (338초) - 처리 1종목 | 업로드 1건 | 스킵 0건
+2026-05-05 19:59:16,929 [INFO] ========================================
+2026-05-05 19:59:16,930 [INFO] 파이프라인 시작
+2026-05-05 19:59:16,937 [WARNING] 일치하는 종목 없음: ['sk하이닉스']
+2026-05-05 19:59:31,085 [INFO] ========================================
+2026-05-05 19:59:31,086 [INFO] 파이프라인 시작
+2026-05-05 19:59:31,086 [INFO] 대상 종목: ['SK하이닉스']
+2026-05-05 19:59:31,086 [INFO] [SK하이닉스] STEP 1 - 리포트 생성
+2026-05-05 19:59:38,747 [INFO] [SK하이닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-05 19:59:40,075 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-06 18:19:34,286 [INFO] ========================================
+2026-05-06 18:19:34,286 [INFO] 파이프라인 시작
+2026-05-06 18:19:34,287 [INFO] 대상 종목: ['삼성전자', 'SK하이닉스']
+2026-05-06 18:19:34,287 [INFO] [삼성전자] STEP 1 - 리포트 생성
+2026-05-06 18:19:42,253 [INFO] [삼성전자] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-06 18:19:43,534 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-06 18:20:45,596 [INFO] [삼성전자] 변환 완료: [삼성전자] 오늘 장 마감 정리 | 2026.05.06
+2026-05-06 18:20:45,599 [INFO] [삼성전자] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260506_삼성전자_005930.md
+2026-05-06 18:20:45,599 [INFO] [삼성전자] STEP 3 - 네이버 업로드
+2026-05-06 18:24:36,008 [INFO] [SK하이닉스] STEP 1 - 리포트 생성
+2026-05-06 18:24:42,258 [INFO] [SK하이닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-06 18:24:43,672 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-06 18:25:35,906 [INFO] [SK하이닉스] 변환 완료: [SK하이닉스] 오늘 장 마감 정리 | 2026.05.06
+2026-05-06 18:25:35,912 [INFO] [SK하이닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260506_SK하이닉스_000660.md
+2026-05-06 18:25:35,913 [INFO] [SK하이닉스] STEP 3 - 네이버 업로드
+2026-05-06 18:30:04,583 [INFO] ========================================
+2026-05-06 18:30:04,583 [INFO] 완료 (630초) - 처리 2종목 | 업로드 2건 | 스킵 0건
+2026-05-07 18:44:20,360 [INFO] ========================================
+2026-05-07 18:44:20,361 [INFO] 파이프라인 시작
+2026-05-07 18:44:20,369 [INFO] 대상 종목: ['SK이터닉스', '삼성전자', 'SK하이닉스', '현대자동차', '현대로템', '쏘카']
+2026-05-07 18:44:20,369 [INFO] [SK이터닉스] STEP 1 - 리포트 생성
+2026-05-07 18:44:28,128 [INFO] [SK이터닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-07 18:44:29,454 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-07 18:45:18,265 [INFO] [SK이터닉스] 변환 완료: [SK이터닉스] 오늘 장 마감 정리 | 2026.05.07
+2026-05-07 18:45:18,266 [INFO] [SK이터닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260507_SK이터닉스_475150.md
+2026-05-07 18:45:18,267 [INFO] [SK이터닉스] STEP 3 - 네이버 업로드
+2026-05-07 18:48:33,022 [INFO] [삼성전자] STEP 1 - 리포트 생성
+2026-05-07 18:48:38,157 [INFO] [삼성전자] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-07 18:48:39,804 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-07 18:49:33,900 [INFO] [삼성전자] 변환 완료: [삼성전자] 오늘 장 마감 정리 | 2026.05.07
+2026-05-07 18:49:33,903 [INFO] [삼성전자] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260507_삼성전자_005930.md
+2026-05-07 18:49:33,903 [INFO] [삼성전자] STEP 3 - 네이버 업로드
+2026-05-07 18:54:11,827 [INFO] [SK하이닉스] STEP 1 - 리포트 생성
+2026-05-07 18:54:16,902 [INFO] [SK하이닉스] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-07 18:54:18,256 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-07 18:55:10,200 [INFO] [SK하이닉스] 변환 완료: [SK하이닉스] 오늘 장 마감 정리 | 2026.05.07
+2026-05-07 18:55:10,201 [INFO] [SK하이닉스] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260507_SK하이닉스_000660.md
+2026-05-07 18:55:10,202 [INFO] [SK하이닉스] STEP 3 - 네이버 업로드
+2026-05-07 18:59:10,834 [INFO] [현대자동차] STEP 1 - 리포트 생성
+2026-05-07 18:59:16,169 [INFO] [현대자동차] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-07 18:59:17,554 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-07 19:00:06,792 [INFO] [현대자동차] 변환 완료: [현대자동차] 오늘 장 마감 정리 | 2026.05.07
+2026-05-07 19:00:06,794 [INFO] [현대자동차] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260507_현대자동차_005380.md
+2026-05-07 19:00:06,794 [INFO] [현대자동차] STEP 3 - 네이버 업로드
+2026-05-07 19:03:42,392 [INFO] [현대로템] STEP 1 - 리포트 생성
+2026-05-07 19:03:47,476 [INFO] [현대로템] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-07 19:03:48,504 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-07 19:04:40,648 [INFO] [현대로템] 변환 완료: [현대로템] 오늘 장 마감 정리 | 2026.05.07
+2026-05-07 19:04:40,650 [INFO] [현대로템] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260507_현대로템_064350.md
+2026-05-07 19:04:40,650 [INFO] [현대로템] STEP 3 - 네이버 업로드
+2026-05-07 19:08:20,033 [INFO] [쏘카] STEP 1 - 리포트 생성
+2026-05-07 19:08:25,283 [INFO] [쏘카] STEP 2 - 블로그 글 변환 (Claude API)
+2026-05-07 19:08:26,790 [INFO] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-07 19:09:12,897 [INFO] [쏘카] 변환 완료: [쏘카] 오늘 장 마감 정리 | 2026.05.07
+2026-05-07 19:09:12,901 [INFO] [쏘카] 블로그 글 저장: C:\Users\super\Desktop\Stock\blog_output\20260507_쏘카_403550.md
+2026-05-07 19:09:12,901 [INFO] [쏘카] STEP 3 - 네이버 업로드
+2026-05-07 19:12:35,005 [INFO] ========================================
+2026-05-07 19:12:35,006 [INFO] 완료 (1694초) - 처리 6종목 | 업로드 6건 | 스킵 0건

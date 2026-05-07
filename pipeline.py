@@ -40,6 +40,14 @@ def run():
         logging.warning("워치리스트가 비어 있어요. 종료합니다.")
         sys.exit(1)
 
+    # 커맨드라인 인자로 종목 필터링 (코드 또는 이름)
+    filters = sys.argv[1:]
+    if filters:
+        stocks = [s for s in stocks if s["code"] in filters or s["name"] in filters]
+        if not stocks:
+            logging.warning(f"일치하는 종목 없음: {filters}")
+            sys.exit(1)
+
     logging.info(f"대상 종목: {[s['name'] for s in stocks]}")
 
     results = []

@@ -17,6 +17,49 @@ from chart_generator import generate_charts
 
 console = Console()
 
+def get_foreign_volume(code: str, days: int = 60):
+    """네이버금융에서 외국인 순매매량(주) 수집. 실패 시 None 반환."""
+    try:
+        import requests
+        from bs4 import BeautifulSoup
+        import pandas as pd
+
+        records = []
+        for page in range(1, 4):  # 페이지당 약 30일, 최대 3페이지
+            url = f"https://finance.naver.com/item/frgn.naver?code={code}&page={page}"
+            hdrs = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+            r = requests.get(url, headers=hdrs, timeout=5)
+            soup = BeautifulSoup(r.text, "html.parser")
+
+            tables = soup.find_all("table", {"class": "type2"})
+            if len(tables) < 2:
+                break
+
+            for row in tables[1].find_all("tr"):
+                cols = [td.get_text(strip=True) for td in row.find_all("td")]
+                if len(cols) < 7 or not cols[0] or "." not in cols[0]:
+                    continue
+                try:
+                    date_str = cols[0].replace(".", "-")
+                    fv = int(cols[6].replace(",", "").replace("+", ""))
+                    records.append({"date": date_str, "외국인순매수": fv})
+                except (ValueError, IndexError):
+                    continue
+
+            if len(records) >= days:
+                break
+
+        if not records:
+            return None
+
+        df = pd.DataFrame(records)
+        df["date"] = pd.to_datetime(df["date"])
+        df = df.set_index("date").sort_index()
+        return df
+    except Exception:
+        return None
+
+
 def get_price_data(code, days=30):
     end = datetime.today().strftime("%Y-%m-%d")
     start = (datetime.today() - timedelta(days=days)).strftime("%Y-%m-%d")
@@ -42,9 +85,79 @@ def get_market_index():
             pass
     return result
 
-def make_tomorrow_checkpoints(price, volume, df, high_52w, low_52w, news_list, disclosures):
+def make_foreign_signal(foreign_df, df):
+    """외국인 순매수 패턴 해석. 신호 없거나 데이터 없으면 빈 리스트 반환."""
+    if foreign_df is None or foreign_df.empty:
+        return []
+
+    signals = []
+    try:
+        aligned = foreign_df.reindex(df.index).dropna()
+        if aligned.empty:
+            return []
+
+        fv = aligned["외국인순매수"]
+        today_fv = int(fv.iloc[-1])
+        today_change = df["Change"].iloc[-1]
+
+        # ── 패턴 1: 연속 순매수/순매도 (3일 이상)
+        streak, direction = 0, None
+        for v in reversed(fv.values):
+            cur = "매수" if v > 0 else "매도"
+            if direction is None:
+                direction, streak = cur, 1
+            elif cur == direction:
+                streak += 1
+            else:
+                break
+
+        if streak >= 3:
+            sign = "+" if today_fv >= 0 else ""
+            if direction == "매수":
+                signals.append(
+                    f"외국인 {streak}일 연속 순매수 (오늘 +{today_fv/10000:.0f}만주) "
+                    f"— 외국인 매집 가능성, 상승 모멘텀 주목"
+                )
+            else:
+                signals.append(
+                    f"외국인 {streak}일 연속 순매도 (오늘 {today_fv/10000:.0f}만주) "
+                    f"— 외국인 이탈 지속, 하락 압력 주의"
+                )
+
+        # ── 패턴 2: 주가 방향과 외국인 방향 불일치
+        if today_change > 0 and today_fv < 0:
+            signals.append(
+                f"오늘 주가 상승이나 외국인은 순매도 ({today_fv/10000:.0f}만주) "
+                f"— 개인·기관 주도 상승, 지속성 약할 수 있음"
+            )
+        elif today_change < 0 and today_fv > 0:
+            signals.append(
+                f"오늘 주가 하락에도 외국인은 순매수 (+{today_fv/10000:.0f}만주) "
+                f"— 외국인 저가 매집 가능성, 반등 여부 주목"
+            )
+
+        # ── 패턴 3: 오늘 거래 규모 급증 (20일 평균 대비 2배 이상)
+        avg_abs = fv.abs().tail(20).mean()
+        if avg_abs > 0 and abs(today_fv) >= avg_abs * 2 and abs(today_fv) > 100_000:
+            label = "순매수" if today_fv >= 0 else "순매도"
+            ratio = abs(today_fv) / avg_abs
+            signals.append(
+                f"오늘 외국인 {label} 규모 평소 대비 {ratio:.1f}배 — 강한 방향성 신호"
+            )
+
+    except Exception:
+        pass
+
+    return signals
+
+
+def make_tomorrow_checkpoints(price, volume, df, high_52w, low_52w, news_list, disclosures,
+                              foreign_df=None):
     """데이터 근거가 있는 항목만 체크포인트로 반환"""
     points = []
+
+    # 외국인 패턴 (최우선)
+    points.extend(make_foreign_signal(foreign_df, df))
 
     # 거래량: 오늘 vs 5일 평균
     avg_vol = df["Volume"].tail(5).mean()
@@ -80,7 +193,8 @@ def make_tomorrow_checkpoints(price, volume, df, high_52w, low_52w, news_list, d
 
 
 def save_md(code, name, today_str, price, change, volume, high_30, low_30,
-            high_52w, low_52w, market_index, df, fin, summary, news_list, disclosures):
+            high_52w, low_52w, market_index, df, fin, summary, news_list, disclosures,
+            foreign_df=None):
     lines = []
     arrow = "▲" if change >= 0 else "▼"
     change_str = f"+{change*100:.2f}%" if change >= 0 else f"{change*100:.2f}%"
@@ -90,7 +204,8 @@ def save_md(code, name, today_str, price, change, volume, high_30, low_30,
     lines.append("> 📌 이 글은 AI가 데이터를 분석해서 정리한 내용이에요. 주식 정보가 어디 있는지도 모르겠고, 찾아도 무슨 말인지 모르겠다는 분들을 위해 쓰고 있어요. 틀릴 수도 있으니 꼭 참고용으로만 봐주세요 😊\n")
 
     # ── 내일 체크포인트 (데이터 근거 있는 것만)
-    checkpoints = make_tomorrow_checkpoints(price, volume, df, high_52w, low_52w, news_list, disclosures)
+    checkpoints = make_tomorrow_checkpoints(price, volume, df, high_52w, low_52w, news_list, disclosures,
+                                            foreign_df=foreign_df)
     if checkpoints:
         lines.append("## 내일 체크포인트")
         lines.append("> 데이터 기반 확인 포인트입니다. 예측이 아닙니다.")
@@ -272,14 +387,22 @@ def print_report(code, name):
             prefix = "       " if i > 0 else ""
             console.print(f"{prefix}· [{date}] {d['title']}")
 
+    # ── 외국인 순매수 (실패해도 계속 진행)
+    foreign_df = get_foreign_volume(code)
+    if foreign_df is not None:
+        console.print(f"  [dim]외국인 순매수 데이터 수신 완료[/dim]")
+    else:
+        console.print(f"  [dim]외국인 데이터 없음 (네이버 스킵)[/dim]")
+
     # ── MD 저장
     today_str = datetime.today().strftime("%Y-%m-%d")
     path = save_md(code, name, today_str, price, change, volume, high_30, low_30,
-                   high_52w, low_52w, market_index, df30, fin, summary, news_list, disclosures)
+                   high_52w, low_52w, market_index, df30, fin, summary, news_list, disclosures,
+                   foreign_df=foreign_df)
     console.print(f"  [dim]💾 {path}[/dim]")
 
     # ── 차트 생성 (주가 차트는 365일, 거래량은 30일)
-    chart_paths = generate_charts(code, name, df, fin)
+    chart_paths = generate_charts(code, name, df, fin, foreign_df)
     console.print(f"  [dim]📊 차트 {len(chart_paths)}개 생성[/dim]")
     return chart_paths
 

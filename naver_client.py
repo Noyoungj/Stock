@@ -85,11 +85,40 @@ def html_to_segments(html: str) -> list:
                 walk(c, bold, el_color)
         elif tag == "br":
             text_buf.append(("\n", False, None))
+        elif tag == "a":
+            href = el.get("href", "")
+            link_parts = []
+            def _link_collect(e):
+                if isinstance(e, NavigableString):
+                    t = re.sub(r"\s+", " ", str(e))
+                    if t.strip():
+                        link_parts.append(t)
+                else:
+                    for c in e.children:
+                        _link_collect(c)
+            _link_collect(el)
+            link_text = "".join(link_parts).strip()
+            if link_text and href:
+                flush()
+                segments.append(("link", link_text, href))
+            elif link_text:
+                text_buf.append((link_text, bold, color))
+            return
         elif tag == "blockquote":
-            text_buf.append(("\n", False, None))
-            for c in el.children:
-                walk(c, bold=True, color=el_color)
-            text_buf.append(("\n", False, None))
+            flush()
+            bq_parts = []
+            def _bq_collect(e):
+                if isinstance(e, NavigableString):
+                    t = re.sub(r"\s+", " ", str(e))
+                    if t.strip():
+                        bq_parts.append(t)
+                else:
+                    for c in e.children:
+                        _bq_collect(c)
+            _bq_collect(el)
+            bq_text = "".join(bq_parts).strip()
+            if bq_text:
+                segments.append(("blockquote", bq_text))
         elif tag:
             for c in el.children:
                 walk(c, bold, el_color)
@@ -234,7 +263,6 @@ def post_article(title: str, html_content: str, chart_paths: dict = None) -> dic
     """네이버 블로그에 글 발행. 성공 시 {'ok': True, 'title': ...} 반환"""
     chart_paths = chart_paths or {}
 
-    # 마커 기준으로 본문을 분할 → [(텍스트, 차트키 or None), ...]
     marker_key_map = {
         "[CHART_PRICE]": "price",
         "[CHART_VOLUME]": "volume",
@@ -242,15 +270,19 @@ def post_article(title: str, html_content: str, chart_paths: dict = None) -> dic
         "[CHART_FINANCIAL_TABLE]": "financial_table",
         "[CHART_FINANCIAL]": "financial",
     }
-    # HTML을 차트 마커 기준으로 분할 → [(html_segment, 차트키 or None), ...]
-    # 긴 마커부터 처리해야 부분 문자열 충돌 방지 ([CHART_VOLUME] ⊂ [CHART_VOLUME_TABLE])
+    # 문서 순서대로 분할 (re.split으로 마커 위치 기준 순서 보장)
+    pattern = "|".join(re.escape(m) for m in marker_key_map)
+    raw_parts = re.split(f"({pattern})", html_content)
     segments = []
-    remaining = html_content
-    for marker, key in sorted(marker_key_map.items(), key=lambda x: -len(x[0])):
-        if marker in remaining:
-            before, remaining = remaining.split(marker, 1)
-            segments.append((before.strip(), key))
-    segments.append((remaining.strip(), None))
+    i = 0
+    while i < len(raw_parts):
+        text = raw_parts[i].strip()
+        i += 1
+        chart_key = None
+        if i < len(raw_parts) and raw_parts[i] in marker_key_map:
+            chart_key = marker_key_map[raw_parts[i]]
+            i += 1
+        segments.append((text, chart_key))
 
     driver = _build_driver(headless=False)
     try:
@@ -298,6 +330,52 @@ def post_article(title: str, html_content: str, chart_paths: dict = None) -> dic
                 ActionChains(driver).key_down(Keys.CONTROL).send_keys("b").key_up(Keys.CONTROL).perform()
             time.sleep(0.1)
 
+        def _insert_link(text: str, url: str):
+            # 링크 텍스트 입력
+            for ch in text:
+                ActionChains(driver).send_keys(ch).perform()
+                time.sleep(random.uniform(0.01, 0.05))
+            # 방금 입력한 텍스트 선택 (Shift+← * 글자수)
+            for _ in range(len(text)):
+                ActionChains(driver).key_down(Keys.SHIFT).send_keys(Keys.ARROW_LEFT).key_up(Keys.SHIFT).perform()
+            time.sleep(0.2)
+            # 링크 버튼 클릭
+            try:
+                driver.find_element(By.CSS_SELECTOR, "button[data-name='oglink']").click()
+            except Exception:
+                return
+            time.sleep(1.5)
+            # URL 입력창 찾기
+            try:
+                url_input = WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "input.se-popup-oglink-input"))
+                )
+                url_input.clear()
+                url_input.send_keys(url)
+                url_input.send_keys(Keys.RETURN)
+                time.sleep(2)
+            except Exception:
+                ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+                time.sleep(0.3)
+
+        def _insert_blockquote(text: str):
+            try:
+                driver.find_element(
+                    By.CSS_SELECTOR,
+                    "button[data-name='quotation']"
+                ).click()
+            except Exception:
+                pass
+            time.sleep(0.2)
+            for ch in text:
+                ActionChains(driver).send_keys(ch).perform()
+                time.sleep(random.uniform(0.01, 0.05))
+            # 인용구 모드 종료 — 아래 화살표 두 번
+            ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
+            time.sleep(0.1)
+            ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
+            time.sleep(0.3)
+
         for html_seg, chart_key in segments:
             if html_seg:
                 parsed = html_to_segments(html_seg)
@@ -314,6 +392,16 @@ def post_article(title: str, html_content: str, chart_paths: dict = None) -> dic
                             body_el.click()
                         except Exception:
                             pass
+                    elif seg[0] == "blockquote":
+                        if is_bold:
+                            _toggle_bold()
+                            is_bold = False
+                        _insert_blockquote(seg[1])
+                    elif seg[0] == "link":
+                        if is_bold:
+                            _toggle_bold()
+                            is_bold = False
+                        _insert_link(seg[1], seg[2])
                     else:
                         current_color = None
                         for text, bold, color in seg[1]:
@@ -339,9 +427,16 @@ def post_article(title: str, html_content: str, chart_paths: dict = None) -> dic
 
             if chart_key and chart_key in chart_paths:
                 _upload_image(driver, str(Path(chart_paths[chart_key]).resolve()))
+                # 이미지 선택 해제 후 커서를 이미지 아래로 이동
                 try:
-                    body_el = driver.find_element(By.CSS_SELECTOR, ".se-section-text")
-                    body_el.click()
+                    ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+                    time.sleep(0.3)
+                    ActionChains(driver).send_keys(Keys.DOWN).perform()
+                    time.sleep(0.2)
+                    ActionChains(driver).send_keys(Keys.END).perform()
+                    time.sleep(0.2)
+                    ActionChains(driver).send_keys(Keys.RETURN).perform()
+                    time.sleep(0.3)
                 except Exception:
                     pass
 

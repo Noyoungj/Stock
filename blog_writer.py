@@ -38,20 +38,31 @@ def md_to_blog_html(md_content: str, stock_name: str, stock_code: str) -> dict:
 
 제목 형식: "[종목명] 오늘 장 마감 정리 | YYYY.MM.DD"
 
+**⚠️ 섹션 순서 고정 (절대 바꾸지 말 것):**
+1. AI 안내문
+2. 오늘 한 줄 요약
+3. 내일 체크포인트
+4. 주가 흐름 섹션 + [CHART_PRICE]
+5. 재무 상태 섹션 + [CHART_FINANCIAL_TABLE] + [CHART_FINANCIAL]
+6. 오늘의 포인트
+7. 거래량 섹션 + [CHART_VOLUME_TABLE] + [CHART_VOLUME]
+8. 뉴스/공시 섹션
+
+이 순서를 어기면 안 됩니다. 글을 쓰기 전에 반드시 위 순서대로 작성할 것.
+
 ---
 {md_content}
 ---
 """
 
-    message = client.messages.create(
+    with client.messages.stream(
         model="claude-sonnet-4-6",
-        max_tokens=2048,
+        max_tokens=30000,
         temperature=0,
         system=system_prompt,
         messages=[{"role": "user", "content": prompt}],
-    )
-
-    raw = message.content[0].text
+    ) as stream:
+        raw = stream.get_final_text()
 
     if "---TITLE---" in raw and "---CONTENT---" in raw:
         title = raw.split("---TITLE---")[1].split("---CONTENT---")[0].strip()

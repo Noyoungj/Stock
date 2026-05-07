@@ -3,6 +3,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from pathlib import Path
+import math
 
 CHARTS_DIR = Path(__file__).parent / "charts"
 CHARTS_DIR.mkdir(exist_ok=True)
@@ -11,12 +12,12 @@ plt.rcParams["font.family"] = "Malgun Gothic"
 plt.rcParams["axes.unicode_minus"] = False
 
 
-def generate_charts(code: str, name: str, df, fin: dict) -> dict:
+def generate_charts(code: str, name: str, df, fin: dict, foreign_df=None) -> dict:
     """차트 생성 후 경로 dict 반환"""
     paths = {}
     paths["price"] = _price_chart(code, name, df)
-    paths["volume"] = _volume_chart(code, name, df)
-    paths["volume_table"] = _volume_table_chart(code, name, df)
+    paths["volume"] = _volume_chart(code, name, df, foreign_df)
+    paths["volume_table"] = _volume_table_chart(code, name, df, foreign_df)
     if fin:
         p = _financial_chart(code, name, fin)
         if p:
@@ -55,15 +56,40 @@ def _price_chart(code: str, name: str, df) -> str:
     return path
 
 
-def _volume_chart(code: str, name: str, df) -> str:
+def _volume_chart(code: str, name: str, df, foreign_df=None) -> str:
     fig, ax = plt.subplots(figsize=(10, 3))
     colors = ["#e74c3c" if c >= 0 else "#3498db" for c in df["Change"]]
     ax.bar(df.index, df["Volume"], color=colors, alpha=0.85, width=0.8)
-    ax.set_title(f"{name} 거래량  (빨강=상승일 / 파랑=하락일)", fontsize=13, fontweight="bold", pad=12)
+    title = f"{name} 거래량  (빨강=상승일 / 파랑=하락일)"
     ax.set_ylabel("거래량")
     ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{int(x/10000):,}만"))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%m/%d"))
-    ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=1))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%y/%m"))
+    ax.xaxis.set_major_locator(mdates.MonthLocator())
+
+    if foreign_df is not None:
+        try:
+            aligned = foreign_df.reindex(df.index)
+            vals = aligned["외국인순매수"]
+            if not vals.isna().all():
+                ax2 = ax.twinx()
+                ax2.plot(aligned.index, vals, color="#9b59b6", linewidth=1.5,
+                         label="외국인 순매수", zorder=3)
+                ax2.axhline(0, color="#9b59b6", linewidth=0.6, linestyle="--", alpha=0.4)
+                ax2.fill_between(aligned.index, vals, 0,
+                                 where=(vals >= 0), alpha=0.08, color="#2ecc71")
+                ax2.fill_between(aligned.index, vals, 0,
+                                 where=(vals < 0), alpha=0.08, color="#e74c3c")
+                ax2.set_ylabel("외국인 순매수 (만주)", color="#9b59b6", fontsize=9)
+                ax2.tick_params(axis="y", colors="#9b59b6", labelsize=8)
+                ax2.yaxis.set_major_formatter(
+                    plt.FuncFormatter(lambda x, _: f"{x/10000:+.0f}만")
+                )
+                ax2.legend(loc="upper left", fontsize=9)
+                title += "  |  보라=외국인 순매수"
+        except Exception:
+            pass
+
+    ax.set_title(title, fontsize=12, fontweight="bold", pad=12)
     fig.autofmt_xdate()
     ax.grid(axis="y", linestyle="--", alpha=0.5)
     plt.tight_layout()
@@ -73,9 +99,11 @@ def _volume_chart(code: str, name: str, df) -> str:
     return path
 
 
-def _volume_table_chart(code: str, name: str, df) -> str:
+def _volume_table_chart(code: str, name: str, df, foreign_df=None) -> str:
     recent = df.tail(5).copy()
     avg_20 = df["Volume"].tail(20).mean()
+
+    has_foreign = foreign_df is not None
 
     table_data = []
     cell_colors = []
@@ -99,13 +127,34 @@ def _volume_table_chart(code: str, name: str, df) -> str:
             label = "정상"
             bg = "#ffffff"
 
-        table_data.append([date_str, vol_str, label])
-        cell_colors.append(["#f5f5f5", "#f9f9f9", bg])
+        row_data = [date_str, vol_str, label]
+        row_colors = ["#f5f5f5", "#f9f9f9", bg]
+
+        if has_foreign:
+            try:
+                fv = foreign_df.loc[idx, "외국인순매수"] if idx in foreign_df.index else None
+                fvi = float(fv)
+                if math.isnan(fvi):
+                    raise ValueError
+                sign = "+" if fvi >= 0 else ""
+                foreign_str = f"{sign}{fvi/10000:.0f}만주"
+                foreign_bg = "#e8f5e9" if fvi >= 0 else "#ffebee"
+            except Exception:
+                foreign_str = "-"
+                foreign_bg = "#f5f5f5"
+            row_data.append(foreign_str)
+            row_colors.append(foreign_bg)
+
+        table_data.append(row_data)
+        cell_colors.append(row_colors)
 
     col_labels = ["날짜", "거래량", "평소 대비"]
-    col_colors = ["#37474f"] * 3
+    if has_foreign:
+        col_labels.append("외국인 순매수")
+    col_colors = ["#37474f"] * len(col_labels)
 
-    fig, ax = plt.subplots(figsize=(7, 2.4))
+    fig_width = 9 if has_foreign else 7
+    fig, ax = plt.subplots(figsize=(fig_width, 2.4))
     ax.axis("off")
 
     tbl = ax.table(
